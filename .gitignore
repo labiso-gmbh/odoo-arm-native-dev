@@ -1,0 +1,53 @@
+# Ignore development directories
+workspace/odoo_addons
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Odoo logs
+log/
+*.log
+
+# Ignore database dump files
+*.dump
+*.sql
+
+# Ignore generated documentation
+doc/
+
+# Ignore user-specific settings
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore test reports
+.coverage
+.xmlcoverage
+
+# Ignore backup files
+*~
+
+# Ignore Odoo addons directories
+addons/
+
+# Ignore built assets
+*.scssc
+*.css
+*.js
+
+# Ignore Odoo virtual environment files
+venv/
+.env/
+
+# Ignore editor backup files
+*.swp
+*.swo
+*.bak
+*.save
+
+# Ignore system files
+.DS_Store
+Thumbs.db

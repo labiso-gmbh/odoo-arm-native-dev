@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    shm_size: "2048mb"
+    volumes:
+      - odoo_database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_DB=postgres
+    ports:
+      - "127.0.0.1:5436:5432"
+    networks:
+      - odoo_backend
+
+  odoo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - odoo_data:/home/odoo
+      - ../workspace:/workspace
+    depends_on:
+      - postgres
+    ports:
+      - "8016:8069"
+      - "8046:8072"
+    networks:
+      - odoo_backend
+networks:
+  odoo_backend:
+    driver: bridge
+
+volumes:
+  odoo_database:
+  odoo_data:

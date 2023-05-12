@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+__import__("os").environ["TZ"] = "UTC"
+import os, sys
+from glob import glob
+
+import odoo
+
+repositories = []
+
+MANIFEST_NAMES = ("__manifest__.py", "__openerp__.py")
+
+
+def is_addons_path(path):
+
+    for f in os.listdir(path):
+        modpath = os.path.join(path, f)
+        if os.path.isdir(modpath):
+
+            def hasfile(filename):
+                return os.path.isfile(os.path.join(modpath, filename))
+
+            if hasfile("__init__.py") and any(
+                hasfile(mname) for mname in MANIFEST_NAMES
+            ):
+                return True
+    return False
+
+
+def addons_repo_search(path, without_enterprise):
+
+    directories = glob(path + "/*/")
+
+    for dir in directories:
+
+        if "submodule" in dir:
+            continue
+
+        if is_addons_path(dir):
+
+            if without_enterprise:
+                if "web_enterprise" in os.listdir(dir):
+                    continue
+
+            repositories.append(dir[:-1])
+
+        else:
+            addons_repo_search(dir, without_enterprise)
+
+
+def addons_path_argv():
+    """
+    Sets the odoo addons path automatically in the arguments.
+    """
+    if "--no-enterprise" in sys.argv:
+        sys.argv.remove("--no-enterprise")
+        addons_repo_search("/workspace", True)
+    else:
+        addons_repo_search("/workspace", False)
+
+    sys.argv.append("--addons-path=" + ",".join(repositories))
+
+
+if __name__ == "__main__":
+    addons_path_argv()
+    sys.argv[0] = "odoo"
+    odoo.cli.main()

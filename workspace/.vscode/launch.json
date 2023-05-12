@@ -1,0 +1,54 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Odoo EE",
+            "type": "python",
+            "request": "launch",
+            "program": "/usr/bin/odoo-dev-bin",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": [
+                // "shell",
+                "--database=dev_ee",
+                "--log-level=test",
+                "--config=${workspaceFolder}/.vscode/odoo.conf",
+                "--dev=qweb,xml",
+                "--load=base,web",
+                // "--init=/",
+                // "--test-enable",
+                // "--test-tags=/",
+                // "--stop-after-init",
+                // "--load-language=en_US,de_DE,fr_CA",
+                // "--language=fr_CA",
+                // "--i18n-export=${workspaceFolder}/fr_CA.po",
+                // "--modules=/"
+            ]
+        },
+        {
+            "name": "Odoo CE",
+            "type": "python",
+            "request": "launch",
+            "program": "/usr/bin/odoo-dev-bin",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": [
+                // "shell",
+                "--no-enterprise",
+                "--database=dev_ce",
+                "--log-level=test",
+                "--config=${workspaceFolder}/.vscode/odoo.conf",
+                "--dev=qweb,xml",
+                "--load=base,web",
+                // "--init=/",
+                // "--test-enable",
+                // "--test-tags=/",
+                // "--stop-after-init",
+                // "--load-language=en_US,de_DE,fr_CA",
+                // "--language=fr_CA",
+                // "--i18n-export=${workspaceFolder}/fr_CA.po",
+                // "--modules=/"
+            ]
+        }
+    ]
+}
