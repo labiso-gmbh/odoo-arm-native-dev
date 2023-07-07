@@ -5,7 +5,7 @@ USER root
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
 ARG DEBIAN_FRONTEND=noninteractive ODOO_UID=1000 ODOO_GID=1000
-ENV LANG=C.UTF-8 ODOO_RC=/etc/odoo/odoo.conf ODOO_VERSION=16 PGHOST=postgres PGPASSWORD=odoo
+ENV LANG=C.UTF-8 ODOO_RC=/etc/odoo/odoo.conf ODOO_VERSION=16 PGHOST=postgres PGPASSWORD=odoo SHELL=/bin/bash
 
 # PPA of Postgres has a certificate problem, so disable the check
 RUN echo 'Acquire::https::apt.postgresql.org::Verify-Peer "false";' > /etc/apt/apt.conf.d/99postgresql-cert \
@@ -38,3 +38,5 @@ RUN pip install --no-cache-dir -r /odoo_files/requirements.txt
 ENTRYPOINT ["/entrypoint.sh"]
 
 USER odoo
+
+ENV SHELL=/bin/bash
