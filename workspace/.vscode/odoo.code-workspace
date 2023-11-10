@@ -9,5 +9,7 @@
 			"path": "/usr/lib/python3/dist-packages/odoo"
 		},
 	],
-	"settings": {}
+	"settings": {
+		"esbonio.sphinx.confDir": ""
+	}
 }
