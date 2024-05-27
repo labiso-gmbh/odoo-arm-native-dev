@@ -19,9 +19,9 @@
                 // "--test-enable",
                 // "--test-tags=/",
                 // "--stop-after-init",
-                // "--load-language=en_US,de_DE,fr_CA",
-                // "--language=fr_CA",
-                // "--i18n-export=${workspaceFolder}/fr_CA.po",
+                "--load-language=de_DE",
+                "--language=de_DE",
+                // "--i18n-export=${workspaceFolder}/de.po",
                 // "--modules=/"
             ]
         },
@@ -44,9 +44,9 @@
                 // "--test-enable",
                 // "--test-tags=/",
                 // "--stop-after-init",
-                // "--load-language=en_US,de_DE,fr_CA",
-                // "--language=fr_CA",
-                // "--i18n-export=${workspaceFolder}/fr_CA.po",
+                "--load-language=de_DE",
+                "--language=de_DE",
+                // "--i18n-export=${workspaceFolder}/de.po",
                 // "--modules=/"
             ]
         }
