@@ -1,5 +1,5 @@
 # Ignore development directories
-workspace/odoo_addons
+workspace/*
 
 # Ignore compiled Python files
 *.pyc
