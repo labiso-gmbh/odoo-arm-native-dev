@@ -22,6 +22,10 @@ services:
     volumes:
       - odoo_data:/home/odoo
       - ../workspace:/workspace
+    environment:
+      - PGPASSWORD=odoo
+      - PGUSER=odoo
+      - PGHOST=postgres
     depends_on:
       - postgres
     ports:
