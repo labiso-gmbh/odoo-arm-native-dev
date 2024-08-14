@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-phonenumbers python3-pyldap python3-qrcode python3-renderpm \
     python3-setuptools python3-slugify python3-vobject python3-watchdog \
     python3-xlrd python3-xlwt python3-geoip2 python3-rjsmin xz-utils \
-    openssh-client rsync \
+    openssh-client rsync tesseract-ocr tesseract-ocr-eng tesseract-ocr-deu \
     postgresql-client \
     && curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb \
     && curl -o libssl1.1.deb -sSL ftp.us.debian.org/debian/pool/main/o/openssl/libssl1.1_1.1.1w-0+deb11u1_amd64.deb \
