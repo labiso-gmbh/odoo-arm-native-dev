@@ -10,6 +10,7 @@
             "justMyCode": false,
             "args": [
                 // "shell",
+                "--exclude-addon-dirs=*template*",
                 "--database=dev_ee",
                 "--log-level=test",
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
@@ -34,7 +35,7 @@
             "justMyCode": false,
             "args": [
                 // "shell",
-                "--no-enterprise",
+                "--exclude-addon-dirs=*enterprise*,*template*",
                 "--database=dev_ce",
                 "--log-level=test",
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
