@@ -186,8 +186,8 @@ def parse_arguments() -> Tuple[List[str], List[str], List[str]]:
     Parse command-line arguments and handle special flags.
 
     Returns:
-        Tuple[List[str], List[str], List[str]]: A tuple containing the filtered arguments,
-        a list of include patterns, and a list of exclude patterns.
+        Tuple[List[str], List[str], List[str]]: A tuple containing a list of
+        include patterns, and a list of exclude patterns.
     """
     parser = argparse.ArgumentParser(
         description="Odoo Development Start Script",
@@ -207,7 +207,7 @@ def parse_arguments() -> Tuple[List[str], List[str], List[str]]:
     )
 
     # Parse known args to handle our custom arguments
-    args, unknown = parser.parse_known_args()
+    args, odoo_args = parser.parse_known_args()
 
     # Remove our custom arguments from sys.argv
     sys.argv = [
@@ -228,7 +228,7 @@ def parse_arguments() -> Tuple[List[str], List[str], List[str]]:
         else []
     )
 
-    return unknown, include_patterns, exclude_patterns
+    return include_patterns, exclude_patterns
 
 
 def main():
@@ -245,8 +245,7 @@ def main():
         # Set timezone to UTC
         os.environ["TZ"] = "UTC"
 
-        filtered_args, include_patterns, exclude_patterns = parse_arguments()
-        sys.argv = filtered_args
+        include_patterns, exclude_patterns = parse_arguments()
         configure_addons_path(include_patterns, exclude_patterns)
 
         # Set up Odoo CLI arguments
