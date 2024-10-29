@@ -17,7 +17,7 @@
     "visualstudioexptteam.vscodeintellicode",
     "yzhang.markdown-all-in-one"
   ],
-  "name": "Odoo 17.0 Development Container",
+  "name": "Odoo 18.0 Development Container",
   "service": "odoo",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash",

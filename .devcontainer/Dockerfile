@@ -1,10 +1,10 @@
 # Stage 1: Base Odoo Installation
-FROM debian:bookworm-slim as base-odoo-17
+FROM debian:bookworm-slim as base-odoo-18
 
 # Set environment variables
 ENV LANG=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive \
-    ODOO_VERSION=17.0 \
+    ODOO_VERSION=18.0 \
     ODOO_RELEASE=latest \
     ODOO_RC=/etc/odoo/odoo.conf
 
@@ -36,7 +36,7 @@ VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
 EXPOSE 8069 8071 8072
 
 # Stage 2: Development Environment
-FROM base-odoo-17
+FROM base-odoo-18
 
 # Install development dependencies
 RUN echo 'Acquire::https::apt.postgresql.org::Verify-Peer "false";' > /etc/apt/apt.conf.d/99postgresql-cert \

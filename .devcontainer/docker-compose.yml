@@ -11,7 +11,7 @@ services:
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_DB=postgres
     ports:
-      - "127.0.0.1:5437:5432"
+      - "127.0.0.1:5438:5432"
     networks:
       - odoo_backend
 
@@ -29,8 +29,8 @@ services:
     depends_on:
       - postgres
     ports:
-      - "8017:8069"
-      - "8047:8072"
+      - "8018:8069"
+      - "8048:8072"
     networks:
       - odoo_backend
 networks:
