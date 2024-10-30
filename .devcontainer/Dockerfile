@@ -6,7 +6,7 @@ ENV LANG=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive \
     ODOO_VERSION=18.0 \
     ODOO_RELEASE=latest \
-    ODOO_RC=/etc/odoo/odoo.conf
+    ODOO_RC=/workspace/.vscode/odoo.conf
 
 # Install dependencies and Odoo
 RUN apt-get update && apt-get install -y --no-install-recommends \
