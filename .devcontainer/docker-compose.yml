@@ -26,6 +26,9 @@ services:
       - PGPASSWORD=odoo
       - PGUSER=odoo
       - PGHOST=postgres
+      # Mail settings for Mailpit
+      - SMTP_HOST=mailpit
+      - SMTP_PORT=1025
     depends_on:
       - postgres
     ports:
@@ -33,6 +36,18 @@ services:
       - "8048:8072"
     networks:
       - odoo_backend
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "1025:1025"  # SMTP server port
+      - "8025:8025"  # Web interface port
+    environment:
+      - MP_SMTP_AUTH_ACCEPT_ANY=true
+      - MP_SMTP_AUTH_ALLOW_INSECURE=true
+    networks:
+      - odoo_backend
+
 networks:
   odoo_backend:
     driver: bridge

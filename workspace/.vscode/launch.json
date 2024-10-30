@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "Odoo EE",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "/usr/bin/odoo-dev-bin",
             "console": "integratedTerminal",
@@ -13,6 +13,7 @@
                 "--exclude-addon-dirs=*template*",
                 "--database=dev_ee",
                 "--log-level=test",
+                "--log-handler=odoo.tools.convert:DEBUG",
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
                 "--dev=qweb,xml",
                 "--load=base,web",
@@ -28,7 +29,7 @@
         },
         {
             "name": "Odoo CE",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "/usr/bin/odoo-dev-bin",
             "console": "integratedTerminal",
@@ -38,6 +39,7 @@
                 "--exclude-addon-dirs=*enterprise*,*template*",
                 "--database=dev_ce",
                 "--log-level=test",
+                "--log-handler=odoo.tools.convert:DEBUG",
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
                 "--dev=qweb,xml",
                 "--load=base,web",
