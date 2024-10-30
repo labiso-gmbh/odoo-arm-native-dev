@@ -14,19 +14,17 @@
                 "--database=dev_ee",
                 "--log-level=test",
                 "--log-handler=odoo.tools.convert:DEBUG",
-                "--log-handler=odoo.addons.labidoo_iot_report_printing.controllers.main:DEBUG",
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
                 "--dev=qweb,xml",
                 "--load=base,web",
-                "--init=labidoo_mail",
-                // "--update=labidoo_mail",
+                // "--init=/",
                 // "--test-enable",
-                // "--test-tags=labidoo_mail_recipients",
+                // "--test-tags=/",
                 // "--stop-after-init",
                 "--load-language=de_DE",
                 "--language=de_DE",
                 // "--i18n-export=${workspaceFolder}/de.po",
-                // "--modules=mq_event_ticket_management"
+                // "--modules=/"
             ]
         },
         {
@@ -53,25 +51,6 @@
                 "--language=de_DE",
                 // "--i18n-export=${workspaceFolder}/de.po",
                 // "--modules=/"
-            ]
-        },
-
-        {
-            "name": "Migration Script",
-            "type": "python",
-            "request": "launch",
-            "program": "/workspace/rz-has/scripts/migraton_from_isp_billing.py",
-            "console": "integratedTerminal",
-            "justMyCode": false,
-            "args": [
-                "-d",
-                "dev_ee",
-                "-c",
-                "/workspace/.vscode/odoo.conf",
-                "--customers-csv",
-                "/workspace/rz-has/scripts/customers.csv",
-                "--subscriptions-csv",
-                "/workspace/rz-has/scripts/sale_subscriptions.csv",
             ]
         }
     ]
