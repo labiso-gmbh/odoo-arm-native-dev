@@ -1,5 +1,5 @@
 # Stage 1: Base Odoo Installation
-FROM debian:bookworm-slim as base-odoo-18
+FROM --platform=linux/amd64 debian:bookworm-slim as base-odoo-18
 
 # Set environment variables
 ENV LANG=C.UTF-8 \
