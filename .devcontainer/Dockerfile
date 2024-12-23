@@ -1,5 +1,5 @@
 # Stage 1: Base Odoo Installation
-FROM --platform=linux/amd64 debian:bookworm-slim as base-odoo-17
+FROM arm64v8/debian:bookworm-slim as base-odoo-17
 
 # Set environment variables
 ENV LANG=C.UTF-8 \
@@ -17,9 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-xlrd python3-xlwt python3-geoip2 python3-rjsmin xz-utils \
     openssh-client rsync tesseract-ocr tesseract-ocr-eng tesseract-ocr-deu \
     postgresql-client \
-    && curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb \
-    && curl -o libssl1.1.deb -sSL ftp.us.debian.org/debian/pool/main/o/openssl/libssl1.1_1.1.1w-0+deb11u1_amd64.deb \
-    && echo 'ea8277df4297afc507c61122f3c349af142f31e5 wkhtmltox.deb' | sha1sum -c - \
+    && curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_arm64.deb \
+    && curl -o libssl1.1.deb -sSL ftp.us.debian.org/debian/pool/main/o/openssl/libssl1.1_1.1.1w-0+deb11u1_arm64.deb \
     && apt-get install -y --no-install-recommends ./wkhtmltox.deb ./libssl1.1.deb \
     && npm install -g rtlcss \
     && curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
@@ -38,10 +37,12 @@ EXPOSE 8069 8071 8072
 # Stage 2: Development Environment
 FROM base-odoo-17
 
-# Install development dependencies
+# Install development dependencies and multi-arch support
 RUN echo 'Acquire::https::apt.postgresql.org::Verify-Peer "false";' > /etc/apt/apt.conf.d/99postgresql-cert \
+    && dpkg --add-architecture amd64 \
     && apt-get update && apt-get install -y --no-install-recommends \
     cups default-jdk gcc git libcups2-dev libwebp-dev python3-dev \
+    libc6:amd64 libstdc++6:amd64 libgcc1:amd64 libz1:amd64 \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install odoo-upgrade tool
