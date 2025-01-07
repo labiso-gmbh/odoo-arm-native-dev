@@ -60,17 +60,17 @@ Each Odoo version uses dedicated ports to prevent conflicts:
 ## 🏃‍♂️ Getting Started
 
 1. Clone this repository:
-   \`\`\`bash
+   ```bash
    git clone https://github.com/labiso-gmbh/odoo-development
    cd odoo-development
-   \`\`\`
+   ```
 
 2. Choose your Odoo version and open it in VSCode:
-   \`\`\`bash
+   ```bash
    code 16.0  # For Odoo 16
    code 17.0  # For Odoo 17
    code 18.0  # For Odoo 18
-   \`\`\`
+   ```
 
 3. When prompted, click "Reopen in Container" or use the Command Palette (F1):
    - Select "Remote-Containers: Reopen in Container"
@@ -82,12 +82,13 @@ Each Odoo version uses dedicated ports to prevent conflicts:
 ## 📁 Workspace Structure
 
 Each version's workspace contains:
-\`\`\`
+```
 workspace/
-├── odoo/           # Odoo community source code
 ├── enterprise/     # Odoo Enterprise modules (optional)
-└── custom/         # Your custom modules
-\`\`\`
+└── custom_repo_1/         # Your custom modules
+└── custom_repo_2/         # Your custom modules
+└── custom_repo_.../         # Your custom modules
+```
 
 ## 🛠 Development Tools
 
