@@ -1,108 +1,145 @@
-# Odoo Multi-Version Development Environment
+# Odoo Development Environment for Apple Silicon
 
-Welcome to the Odoo Multi-Version Development Environment! This repository provides development containers for Odoo versions 16.0, 17.0, and 18.0, optimized for Apple Silicon (ARM64) architecture.
+Welcome to LABISO's Odoo Development Environment, a cutting-edge solution optimized for Apple Silicon (M1/M2/M3) and ARM64 architectures. This project revolutionizes Odoo development on Apple Silicon by eliminating the need for Rosetta 2 emulation, delivering native performance and superior development experience.
 
-## Overview
+## 🚀 Key Features
 
-This repository contains separate development environments for different Odoo versions, each configured with:
-- Docker containers optimized for ARM64 architecture
-- VSCode development container configuration
-- PostgreSQL database
+- **Native ARM64 Performance**: Engineered specifically for Apple Silicon, eliminating the performance overhead of Rosetta 2 emulation
+- **Multi-Version Support**: Preconfigured environments for Odoo 16.0, 17.0, and 18.0
+- **Optimized Development Container**: VSCode devcontainer with full ARM64 support
+- **Comprehensive Tooling**: Integrated development tools, debugging capabilities, and code formatting
+- **Isolated Environments**: Each Odoo version runs in its own container with dedicated services
+
+## 🎯 Why This Matters
+
+Traditional Odoo development on Apple Silicon faces significant challenges:
+- Most Odoo Docker images are built for AMD64, requiring Rosetta 2 emulation
+- Emulation results in slower build times and reduced performance
+- Development tools often run sub-optimally under emulation
+
+Our solution addresses these challenges by:
+- Using native ARM64 base images and dependencies
+- Optimizing the development environment for Apple Silicon
+- Providing a seamless, high-performance development experience
+
+## 🛠 Technical Architecture
+
+### Container Stack
+- Base Image: `arm64v8/debian:bookworm-slim`
+- Native ARM64 PostgreSQL
 - Mailpit for email testing
-- Development tools and extensions
+- Custom development tools and scripts
 
-## Prerequisites
+### Development Features
+- VSCode integration with curated extensions
+- Black code formatting
+- Git integration
+- Debugging tools
+- Custom Python package management
+- Automatic addons path generation
 
-Before you begin, ensure you have installed:
+## 📋 Prerequisites
+
+- Apple Silicon Mac (M1/M2/M3) or ARM64-based system
 - [Docker Desktop](https://docs.docker.com/get-docker/)
 - [Visual Studio Code](https://code.visualstudio.com/download)
 - [VSCode Remote - Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
-## Repository Structure
+## 🚦 Port Configuration
 
-```
-.
-├── 16.0/                   # Odoo 16.0 environment
-│   ├── .devcontainer/     # Container configuration
-│   └── workspace/         # Development workspace
-├── 17.0/                   # Odoo 17.0 environment
-│   ├── .devcontainer/     # Container configuration
-│   └── workspace/         # Development workspace
-└── 18.0/                   # Odoo 18.0 environment
-    ├── .devcontainer/     # Container configuration
-    └── workspace/         # Development workspace
-```
+Each Odoo version uses dedicated ports to prevent conflicts:
 
-## Port Configuration
+| Service          | 16.0  | 17.0  | 18.0  |
+|-----------------|-------|-------|-------|
+| Odoo Web        | 8016  | 8017  | 8018  |
+| Odoo Longpolling| 8046  | 8047  | 8048  |
+| PostgreSQL      | 5436  | 5437  | 5438  |
+| Mailpit SMTP    | 1016  | 1017  | 1018  |
+| Mailpit UI      | 8116  | 8117  | 8118  |
 
-Each Odoo version uses different ports to avoid conflicts:
-
-### Odoo 16.0
-- Odoo web: `8016`
-- Odoo longpolling: `8046`
-- PostgreSQL: `5436`
-- Mailpit SMTP: `1026`
-- Mailpit UI: `8026`
-
-### Odoo 17.0
-- Odoo web: `8017`
-- Odoo longpolling: `8047`
-- PostgreSQL: `5437`
-- Mailpit SMTP: `1025`
-- Mailpit UI: `8025`
-
-### Odoo 18.0
-- Odoo web: `8018`
-- Odoo longpolling: `8048`
-- PostgreSQL: `5438`
-- Mailpit SMTP: `1027`
-- Mailpit UI: `8027`
-
-## Usage
+## 🏃‍♂️ Getting Started
 
 1. Clone this repository:
-   ```bash
+   \`\`\`bash
    git clone https://github.com/labiso-gmbh/odoo-development
-   ```
+   cd odoo-development
+   \`\`\`
 
-2. Choose the Odoo version you want to work with by opening its directory in VSCode:
-   ```bash
+2. Choose your Odoo version and open it in VSCode:
+   \`\`\`bash
    code 16.0  # For Odoo 16
    code 17.0  # For Odoo 17
    code 18.0  # For Odoo 18
-   ```
+   \`\`\`
 
-3. When prompted to "Reopen in Container", click "Reopen in Container". Alternatively, open the Command Palette (F1 or Cmd+Shift+P) and select "Remote-Containers: Reopen in Container".
+3. When prompted, click "Reopen in Container" or use the Command Palette (F1):
+   - Select "Remote-Containers: Reopen in Container"
 
-4. Wait for the container to build and start. This may take a few minutes the first time.
+4. Initial container build will take a few minutes. After that:
+   - Odoo web interface: http://localhost:80xx (xx = version number)
+   - Mailpit interface: http://localhost:81xx (xx = 16/17/18)
 
-5. Once the container is ready, you can access:
-   - Odoo web interface at `http://localhost:80xx` (where xx is 16, 17, or 18)
-   - Mailpit interface at `http://localhost:80xx` (where xx is 26, 25, or 27)
+## 📁 Workspace Structure
 
-## Development Workflow
+Each version's workspace contains:
+\`\`\`
+workspace/
+├── odoo/           # Odoo community source code
+├── enterprise/     # Odoo Enterprise modules (optional)
+└── custom/         # Your custom modules
+\`\`\`
 
-1. Each version's workspace directory contains:
-   - `odoo/`: The Odoo source code
-   - `enterprise/`: Odoo Enterprise modules (if available)
-   - Custom module directories
+## 🛠 Development Tools
 
-2. The development container includes:
-   - Python with required dependencies
-   - PostgreSQL database
-   - Development tools (git, black formatter, etc.)
-   - VSCode extensions for Odoo development
+- **Python Tools**
+  - Black formatter (preconfigured)
+  - Pylance for advanced Python support
+  - Debug configurations
 
-3. Changes made in the workspace directory persist on your host machine.
+- **VSCode Extensions**
+  - Odoo snippets
+  - Git integration
+  - XML/Python language support
+  - Thunder Client for API testing
 
-## Contributing
+- **Container Features**
+  - Native ARM64 wkhtmltopdf
+  - PostgreSQL client tools
+  - Development dependencies
 
-We welcome contributions! Please feel free to submit issues and pull requests.
+## 🔄 Development Workflow
 
-## License
+1. **Module Development**
+   - Create new modules in the workspace directory
+   - Automatic addons path configuration
+   - Hot-reload for Python changes
+
+2. **Database Management**
+   - Direct PostgreSQL access via configured ports
+   - Automated database initialization
+
+3. **Email Testing**
+   - Mailpit for catching all outgoing emails
+   - Web interface for email inspection
+
+## 🤝 Contributing
+
+We welcome contributions! Please feel free to:
+- Submit issues for bugs or feature requests
+- Create pull requests for improvements
+- Share your success stories
+
+## ⚖️ License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) file for details.
 
+## 🏢 About LABISO
+
+This development environment is maintained by [LABISO GmbH](https://www.labiso.de), a leading Odoo development and consulting company. We're committed to improving the Odoo development experience and giving back to the community through open-source contributions like this one.
+
 ---
 
-For support or questions, please open an issue in this repository.
+For support, questions, or collaboration opportunities:
+- Open an issue in this repository
+- Contact us through our [website](https://www.labiso.de)
+- Follow us on [LinkedIn](https://www.linkedin.com/company/labiso-gmbh)
