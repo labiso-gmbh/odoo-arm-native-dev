@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "CUSTOM CODE",
+			"path": "/workspace"
+		},
+		{
+			"name": "ODOO SRC",
+			"path": "/usr/lib/python3/dist-packages/odoo"
+		},
+	],
+	"settings": {
+		"esbonio.sphinx.confDir": ""
+	}
+}

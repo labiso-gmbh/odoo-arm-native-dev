@@ -1,0 +1,266 @@
+#!/usr/bin/env python3
+
+"""
+Odoo Development Start Script
+
+This script automates the process of setting up and running Odoo
+in a development environment. It performs the following main tasks:
+1. Sets the timezone to UTC.
+2. Automatically discovers directories containing Odoo addons.
+3. Configures the Odoo addons path.
+4. Launches the Odoo server.
+
+The script supports including and excluding specific addon directories using glob patterns
+with the '--include-addon-dirs' and '--exclude-addon-dirs' arguments.
+
+Usage:
+    python3 odoo-dev-bin [--include-addon-dirs PATTERN1,PATTERN2,...] [--exclude-addon-dirs PATTERN1,PATTERN2,...] [ODOO_ARGS]
+
+Arguments:
+    --include-addon-dirs PATTERN1,PATTERN2,...
+        Comma-separated glob patterns for directories containing addons to explicitly include in the addons path.
+        If specified, ONLY directories matching these patterns will be included,
+        unless they are also matched by an exclude pattern.
+        If not specified, all directories containing addons will be included by default.
+
+        Example:
+            --include-addon-dirs "core_addons,custom_addons"
+            This will include only directories named 'core_addons' or 'custom_addons'.
+
+    --exclude-addon-dirs PATTERN1,PATTERN2,...
+        Comma-separated glob patterns for directories containing addons to exclude from the addons path.
+        Directories matching these patterns will be excluded, even if they match an include pattern.
+
+        Example:
+            --exclude-addon-dirs "test_addons,deprecated_addons"
+            This will exclude directories named 'test_addons' or 'deprecated_addons'.
+
+    ODOO_ARGS
+        Any additional arguments to pass directly to Odoo.
+
+The addons path is constructed as follows:
+1. The script scans the WORKSPACE_PATH directory (default: /workspace) for directories containing Odoo addons.
+2. If --include-addon-dirs is specified, only directories matching these patterns are considered.
+3. Any directories matching the --exclude-addon-dirs patterns are removed from consideration.
+4. The remaining directories are added to the --addons-path argument for Odoo.
+
+Examples:
+    1. Include only core and custom addon directories:
+       python3 odoo-dev-bin --include-addon-dirs "core_addons,custom_addons"
+
+    2. Include all addon directories except test addons:
+       python3 odoo-dev-bin --exclude-addon-dirs "test_addons"
+
+    3. Include specific addon directories and pass additional Odoo arguments:
+       python3 odoo-dev-bin --include-addon-dirs "accounting,sales" -- --db-filter=^custom_db$
+
+Note: The '--' in the last example is used to separate script arguments from Odoo arguments.
+
+The script also supports loading configuration from a 'odoo_dev_config.json' file
+in the same directory. This file can be used to set the WORKSPACE_PATH.
+
+Example odoo_dev_config.json:
+{
+    "WORKSPACE_PATH": "/custom/workspace/path"
+}
+"""
+
+import os
+import sys
+from pathlib import Path
+from typing import List, Tuple
+import argparse
+import fnmatch
+import logging
+import json
+
+import odoo
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+
+
+# Load configuration
+def load_config(config_path: str = "odoo_dev_config.json") -> dict:
+    try:
+        with open(config_path, "r") as config_file:
+            return json.load(config_file)
+    except FileNotFoundError:
+        logger.warning(
+            f"Configuration file {config_path} not found. Using default values."
+        )
+        return {}
+    except json.JSONDecodeError:
+        logger.error(
+            f"Error parsing configuration file {config_path}. Using default values."
+        )
+        return {}
+
+
+config = load_config()
+WORKSPACE_PATH = Path(config.get("WORKSPACE_PATH", "/workspace"))
+MANIFEST_NAMES = ("__manifest__.py", "__openerp__.py")
+
+
+def is_addon_directory(path: Path) -> bool:
+    """
+    Check if the given directory contains Odoo addons.
+
+    An Odoo addon directory must contain at least one subdirectory with
+    an __init__.py file and one of the manifest files (__manifest__.py or __openerp__.py).
+
+    Args:
+        path (Path): The directory path to check.
+
+    Returns:
+        bool: True if the directory contains Odoo addons, False otherwise.
+    """
+    if not path.is_dir():
+        return False
+    for subdir in path.iterdir():
+        if (
+            subdir.is_dir()
+            and (subdir / "__init__.py").is_file()
+            and any((subdir / manifest).is_file() for manifest in MANIFEST_NAMES)
+        ):
+            return True
+    return False
+
+
+def find_addon_directories(
+    root_path: Path, include_patterns: List[str], exclude_patterns: List[str]
+) -> List[str]:
+    """
+    Search for directories containing Odoo addons starting from the given root path.
+
+    Args:
+        root_path (Path): The root directory to start the search from.
+        include_patterns (List[str]): List of glob patterns to include.
+        exclude_patterns (List[str]): List of glob patterns to exclude.
+
+    Returns:
+        List[str]: A list of paths to directories containing Odoo addons.
+    """
+    addon_dirs = []
+    for path in root_path.iterdir():
+        if path.is_dir():
+            path_str = str(path.relative_to(root_path))
+            if include_patterns and not any(
+                fnmatch.fnmatch(path_str, pattern) for pattern in include_patterns
+            ):
+                continue
+            if any(fnmatch.fnmatch(path_str, pattern) for pattern in exclude_patterns):
+                continue
+            if is_addon_directory(path):
+                addon_dirs.append(str(path))
+    return addon_dirs
+
+
+def configure_addons_path(
+    include_patterns: List[str], exclude_patterns: List[str]
+) -> None:
+    """
+    Configure the Odoo addons path by adding it to the command-line arguments.
+
+    This function searches for directories containing addons and adds them to the --addons-path
+    argument, including or excluding directories that match the provided patterns.
+
+    Args:
+        include_patterns (List[str]): List of glob patterns to include.
+        exclude_patterns (List[str]): List of glob patterns to exclude.
+    """
+    addon_dirs = find_addon_directories(
+        WORKSPACE_PATH, include_patterns, exclude_patterns
+    )
+    addons_path_arg = f"--addons-path={','.join(addon_dirs)}"
+    sys.argv.append(addons_path_arg)
+    logger.info(f"Configured addons path with {len(addon_dirs)} directories")
+    logger.debug(f"Addons path: {addons_path_arg}")
+
+
+def parse_arguments() -> Tuple[List[str], List[str], List[str]]:
+    """
+    Parse command-line arguments and handle special flags.
+
+    Returns:
+        Tuple[List[str], List[str], List[str]]: A tuple containing a list of
+        include patterns, and a list of exclude patterns.
+    """
+    parser = argparse.ArgumentParser(
+        description="Odoo Development Start Script",
+        epilog="Any arguments after '--' will be passed directly to Odoo.",
+    )
+    parser.add_argument(
+        "--include-addon-dirs",
+        type=str,
+        default="",
+        help="Comma-separated glob patterns for directories containing addons to include. If specified, only matching directories will be included.",
+    )
+    parser.add_argument(
+        "--exclude-addon-dirs",
+        type=str,
+        default="",
+        help="Comma-separated glob patterns for directories containing addons to exclude. Matching directories will be excluded even if they match an include pattern.",
+    )
+
+    # Parse known args to handle our custom arguments
+    args, odoo_args = parser.parse_known_args()
+
+    # Remove our custom arguments from sys.argv
+    sys.argv = [
+        arg
+        for arg in sys.argv
+        if not arg.startswith(("--include-addon-dirs", "--exclude-addon-dirs"))
+    ]
+
+    # Split the comma-separated patterns into lists
+    include_patterns = (
+        [p.strip() for p in args.include_addon_dirs.split(",")]
+        if args.include_addon_dirs
+        else []
+    )
+    exclude_patterns = (
+        [p.strip() for p in args.exclude_addon_dirs.split(",")]
+        if args.exclude_addon_dirs
+        else []
+    )
+
+    return include_patterns, exclude_patterns
+
+
+def main():
+    """
+    Main function to set up and run the Odoo server.
+
+    This function performs the following steps:
+    1. Parses command-line arguments.
+    2. Configures the addons path.
+    3. Sets up the Odoo CLI arguments.
+    4. Launches the Odoo server.
+    """
+    try:
+        # Set timezone to UTC
+        os.environ["TZ"] = "UTC"
+
+        include_patterns, exclude_patterns = parse_arguments()
+        configure_addons_path(include_patterns, exclude_patterns)
+
+        # Set up Odoo CLI arguments
+        sys.argv[0] = "odoo"
+
+        logger.info("Launching Odoo server")
+        logger.debug(f"Odoo command: {' '.join(sys.argv)}")
+        # Launch Odoo
+        odoo.cli.main()
+    except Exception as e:
+        logger.exception(
+            f"An error occurred while running the Odoo development script: {str(e)}"
+        )
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

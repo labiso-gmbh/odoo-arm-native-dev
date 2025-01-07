@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    shm_size: "2048mb"
+    volumes:
+      - odoo16_database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_DB=postgres
+    ports:
+      - "127.0.0.1:5436:5432"
+    networks:
+      - odoo16_backend
+
+  odoo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - odoo16_data:/home/odoo
+      - ../workspace:/workspace
+    environment:
+      - PGPASSWORD=odoo
+      - PGUSER=odoo
+      - PGHOST=postgres
+      # Mail settings for Mailpit
+      - SMTP_HOST=mailpit
+      - SMTP_PORT=1025
+    depends_on:
+      - postgres
+    ports:
+      - "8016:8069"
+      - "8046:8072"
+    networks:
+      - odoo16_backend
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "1026:1025"  # SMTP server port
+      - "8026:8025"  # Web interface port
+    environment:
+      - MP_SMTP_AUTH_ACCEPT_ANY=true
+      - MP_SMTP_AUTH_ALLOW_INSECURE=true
+    networks:
+      - odoo16_backend
+
+networks:
+  odoo16_backend:
+    driver: bridge
+
+volumes:
+  odoo16_database:
+  odoo16_data:

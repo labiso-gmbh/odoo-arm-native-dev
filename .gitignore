@@ -1,53 +1,48 @@
-# Ignore development directories
-workspace/*
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Ignore compiled Python files
-*.pyc
-*.pyo
-*.pyd
+# Virtual Environment
+venv/
+ENV/
+env/
 
-# Ignore Odoo logs
-log/
-*.log
-
-# Ignore database dump files
-*.dump
-*.sql
-
-# Ignore generated documentation
-doc/
-
-# Ignore user-specific settings
+# IDE
 .idea/
 .vscode/
-*.sublime-project
 *.sublime-workspace
+*.sublime-project
 
-# Ignore test reports
-.coverage
-.xmlcoverage
+# Odoo Workspaces
+*/workspace/*
+!*/workspace/README.md
+!*/workspace/.vscode/
+!*/workspace/odoo
 
-# Ignore backup files
-*~
-
-# Ignore Odoo addons directories
-addons/
-
-# Ignore built assets
-*.scssc
-*.css
-*.js
-
-# Ignore Odoo virtual environment files
-venv/
-.env/
-
-# Ignore editor backup files
-*.swp
-*.swo
-*.bak
-*.save
-
-# Ignore system files
+# macOS
 .DS_Store
-Thumbs.db
+.AppleDouble
+.LSOverride
+._*
+
+# Docker
+.docker/
+docker-compose.override.yml

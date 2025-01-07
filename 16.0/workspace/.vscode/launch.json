@@ -52,6 +52,14 @@
                 // "--i18n-export=${workspaceFolder}/de.po",
                 // "--modules=/"
             ]
-        }
-    ]
+        },
+    {
+        "name": "Python: Current File",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "${file}",
+        "console": "integratedTerminal",
+        "justMyCode": true
+    }
+    ],
 }
