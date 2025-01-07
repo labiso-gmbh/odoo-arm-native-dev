@@ -1,6 +1,6 @@
 # Odoo Development Environment for Apple Silicon
 
-Welcome to LABISO's Odoo Development Environment, a cutting-edge solution optimized for Apple Silicon (M1/M2/M3) and ARM64 architectures. This project revolutionizes Odoo development on Apple Silicon by eliminating the need for Rosetta 2 emulation, delivering native performance and superior development experience.
+Welcome to LABISO's Odoo Development Environment, a cutting-edge solution optimized for Apple Silicon (M-Chips) and ARM64 architectures. This project revolutionizes Odoo development on Apple Silicon by eliminating the need for Rosetta 2 emulation, delivering native performance and superior development experience.
 
 ## 🚀 Key Features
 
@@ -40,7 +40,7 @@ Our solution addresses these challenges by:
 
 ## 📋 Prerequisites
 
-- Apple Silicon Mac (M1/M2/M3) or ARM64-based system
+- Apple Silicon Mac (M-Chips) or ARM64-based system
 - [Docker Desktop](https://docs.docker.com/get-docker/)
 - [Visual Studio Code](https://code.visualstudio.com/download)
 - [VSCode Remote - Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
