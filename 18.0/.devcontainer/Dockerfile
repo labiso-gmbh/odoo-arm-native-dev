@@ -1,5 +1,5 @@
 # Stage 1: Base Odoo Installation
-FROM arm64v8/debian:bookworm-slim as base-odoo-18
+FROM arm64v8/ubuntu:noble AS base-odoo-18
 
 # Set environment variables
 ENV LANG=C.UTF-8 \
@@ -16,15 +16,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-setuptools python3-slugify python3-vobject python3-watchdog \
     python3-xlrd python3-xlwt python3-geoip2 python3-rjsmin xz-utils \
     openssh-client rsync tesseract-ocr tesseract-ocr-eng tesseract-ocr-deu \
-    postgresql-client \
-    && curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_arm64.deb \
-    && curl -o libssl1.1.deb -sSL ftp.us.debian.org/debian/pool/main/o/openssl/libssl1.1_1.1.1w-0+deb11u1_arm64.deb \
-    && apt-get install -y --no-install-recommends ./wkhtmltox.deb ./libssl1.1.deb \
+    postgresql-client wget \
+    && wget -O wkhtmltox.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_arm64.deb \
+    && apt-get install -y --no-install-recommends ./wkhtmltox.deb \
     && npm install -g rtlcss \
     && curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
     && apt-get install -y --no-install-recommends ./odoo.deb \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && rm -f /etc/apt/sources.list.d/pgdg.list ./wkhtmltox.deb ./libssl1.1.deb ./odoo.deb
+    && rm -f /etc/apt/sources.list.d/pgdg.list ./wkhtmltox.deb ./odoo.deb
 
 # Create directories and set permissions
 RUN mkdir -p /mnt/extra-addons \
@@ -37,12 +36,20 @@ EXPOSE 8069 8071 8072
 # Stage 2: Development Environment
 FROM base-odoo-18
 
-# Install development dependencies and multi-arch support
-RUN echo 'Acquire::https::apt.postgresql.org::Verify-Peer "false";' > /etc/apt/apt.conf.d/99postgresql-cert \
-    && dpkg --add-architecture amd64 \
-    && apt-get update && apt-get install -y --no-install-recommends \
-    cups default-jdk gcc git libcups2-dev libwebp-dev python3-dev \
-    libc6:amd64 libstdc++6:amd64 libgcc1:amd64 libz1:amd64 \
+# Install development dependencies
+# Install ARM64 development dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    cups \
+    default-jdk \
+    gcc \
+    git \
+    libcups2-dev \
+    libwebp-dev \
+    python3-dev \
+    python3-venv \
+    software-properties-common \
+    wget \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install odoo-upgrade tool
@@ -64,7 +71,7 @@ RUN chown odoo:odoo /entrypoint.sh && chmod +x /entrypoint.sh \
     && mkdir -p /home/odoo && chown odoo:odoo /home/odoo \
     && usermod -d /home/odoo odoo
 
-# Install Python dependencies
+# Install Python dependencies with ARM64 optimizations
 RUN pip install --break-system-packages --no-cache-dir -r /odoo_files/requirements.txt
 
 # Set user, entrypoint, and default shell
