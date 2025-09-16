@@ -1,0 +1,6 @@
+# Development tools and additional packages
+black
+flake8
+click-odoo
+psycopg2-binary
+lxml
