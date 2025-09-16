@@ -22,6 +22,16 @@ The `.vscode` directory will be created automatically when you first open the wo
 - `odoo.conf`: Odoo server configuration
 - VSCode workspace settings
 
+## Features
+
+### AI & RAG Support
+This development environment includes support for Odoo 19.0's new AI features:
+- **PostgreSQL Vector Extension**: Pre-installed `pgvector` extension for RAG (Retrieval-Augmented Generation)
+- **AI Agents**: Ready for Odoo's new AI agent capabilities
+- **Vector Search**: Support for semantic search and similarity operations
+
+The PostgreSQL database is automatically configured with the `vector` extension when the container starts.
+
 ## Ports
 
 This workspace uses the following ports:

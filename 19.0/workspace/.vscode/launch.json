@@ -22,7 +22,7 @@
                 // "--test-tags=/",
                 // "--stop-after-init",
                 "--load-language=de_DE",
-                "--language=de_DE",
+                // "--language=de_DE",
                 // "--i18n-export=${workspaceFolder}/de.po",
                 // "--modules=/"
             ]
@@ -48,7 +48,7 @@
                 // "--test-tags=/",
                 // "--stop-after-init",
                 "--load-language=de_DE",
-                "--language=de_DE",
+                // "--language=de_DE",
                 // "--i18n-export=${workspaceFolder}/de.po",
                 // "--modules=/"
             ]

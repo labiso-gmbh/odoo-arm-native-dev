@@ -2,10 +2,14 @@ version: "3.9"
 
 services:
   postgres:
-    image: postgres:15
+    # image: postgres:15
+    # Use pgvector-enabled PostgreSQL image for Odoo 19.0 RAG support
+    image: pgvector/pgvector:pg15
     shm_size: "2048mb"
     volumes:
       - odoo19_database:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/01-init-db.sql:ro
+      - ./init-pgvector.sh:/docker-entrypoint-initdb.d/02-init-pgvector.sh:ro
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
