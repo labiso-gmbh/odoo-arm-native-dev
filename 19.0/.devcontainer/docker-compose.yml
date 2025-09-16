@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  postgres:
+    # image: postgres:15
+    # Use pgvector-enabled PostgreSQL image for Odoo 19.0 RAG support
+    image: pgvector/pgvector:pg15
+    shm_size: "2048mb"
+    volumes:
+      - odoo19_database:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/01-init-db.sql:ro
+      - ./init-pgvector.sh:/docker-entrypoint-initdb.d/02-init-pgvector.sh:ro
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_DB=postgres
+    ports:
+      - "127.0.0.1:5439:5432"
+    networks:
+      - odoo19_backend
+
+  odoo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - odoo19_data:/home/odoo
+      - ../workspace:/workspace
+    environment:
+      - PGPASSWORD=odoo
+      - PGUSER=odoo
+      - PGHOST=postgres
+      # Mail settings for Mailpit
+      - SMTP_HOST=mailpit
+      - SMTP_PORT=1025
+    depends_on:
+      - postgres
+    ports:
+      - "8019:8069"
+      - "8049:8072"
+    networks:
+      - odoo19_backend
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "1019:1025"  # SMTP server port
+      - "8119:8025"  # Web interface port
+    environment:
+      - MP_SMTP_AUTH_ACCEPT_ANY=true
+      - MP_SMTP_AUTH_ALLOW_INSECURE=true
+    networks:
+      - odoo19_backend
+
+networks:
+  odoo19_backend:
+    driver: bridge
+
+volumes:
+  odoo19_database:
+  odoo19_data:

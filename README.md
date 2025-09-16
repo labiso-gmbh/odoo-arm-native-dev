@@ -5,7 +5,7 @@ A development environment optimized for Odoo on Apple Silicon (M-Chips) and ARM6
 ## 🚀 Key Features
 
 - Native ARM64 support optimized for Apple Silicon
-- Development environments for Odoo 16.0, 17.0, and 18.0
+- Development environments for Odoo 16.0, 17.0, 18.0, and 19.0
 - VSCode devcontainer with ARM64 support
 - Integrated development tools and debugging capabilities
 - Isolated container environments for each Odoo version
@@ -49,13 +49,13 @@ This environment addresses these challenges through:
 
 Service ports for each Odoo version:
 
-| Service          | 16.0  | 17.0  | 18.0  |
-|-----------------|-------|-------|-------|
-| Odoo Web        | 8016  | 8017  | 8018  |
-| Odoo Longpolling| 8046  | 8047  | 8048  |
-| PostgreSQL      | 5436  | 5437  | 5438  |
-| Mailpit SMTP    | 1016  | 1017  | 1018  |
-| Mailpit UI      | 8116  | 8117  | 8118  |
+| Service          | 16.0  | 17.0  | 18.0  | 19.0  |
+|-----------------|-------|-------|-------|-------|
+| Odoo Web        | 8016  | 8017  | 8018  | 8019  |
+| Odoo Longpolling| 8046  | 8047  | 8048  | 8049  |
+| PostgreSQL      | 5436  | 5437  | 5438  | 5439  |
+| Mailpit SMTP    | 1016  | 1017  | 1018  | 1019  |
+| Mailpit UI      | 8116  | 8117  | 8118  | 8119  |
 
 ## 🚀 Setup Instructions
 
@@ -70,6 +70,7 @@ Service ports for each Odoo version:
    code 16.0  # For Odoo 16
    code 17.0  # For Odoo 17
    code 18.0  # For Odoo 18
+   code 19.0  # For Odoo 19
    ```
 
 3. When prompted, select "Reopen in Container" or use the Command Palette (F1):
@@ -77,7 +78,7 @@ Service ports for each Odoo version:
 
 4. After the initial container build:
    - Access Odoo: http://localhost:80xx (xx = version number)
-   - Access Mailpit: http://localhost:81xx (xx = 16/17/18)
+   - Access Mailpit: http://localhost:81xx (xx = 16/17/18/19)
 
 ## 📁 Workspace Structure
 

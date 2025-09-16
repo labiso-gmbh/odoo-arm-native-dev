@@ -1,0 +1,36 @@
+{
+  "dockerComposeFile": "docker-compose.yml",
+  "name": "Odoo 19.0 Development Container",
+  "service": "odoo",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "aaron-bond.better-comments",
+        "ecmel.vscode-html-css",
+        "github.copilot-nightly",
+        "gruntfuggly.todo-tree",
+        "hediet.vscode-drawio",
+        "jigar-patel.odoosnippets",
+        "lextudio.restructuredtext",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "oderwat.indent-rainbow",
+        "rangav.vscode-thunder-client",
+        "redhat.vscode-xml",
+        "streetsidesoftware.code-spell-checker",
+        "visualstudioexptteam.vscodeintellicode",
+        "yzhang.markdown-all-in-one"
+      ],
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "python.formatting.provider": "black",
+        "python.formatting.blackPath": "/usr/local/bin/black",
+        "python.formatting.blackArgs": [
+          "--line-length=79",
+          "--experimental-string-processing"
+        ]
+      }
+    }
+  }
+}
