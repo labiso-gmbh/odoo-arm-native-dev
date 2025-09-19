@@ -4,12 +4,9 @@ FROM arm64v8/ubuntu:noble AS base-odoo-19
 # Set environment variables
 ENV LANG=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive \
-    ODOO_VERSION=19.1a1 \
+    ODOO_VERSION=19.0 \
     ODOO_RELEASE=latest \
     ODOO_RC=/workspace/.vscode/odoo.conf
-
-# TODO: Change ODOO_VERSION back to 19.0 when stable release is available
-# and update the nightly URL accordingly
 
 # Install dependencies and Odoo
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -23,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && wget -O wkhtmltox.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_arm64.deb \
     && apt-get install -y --no-install-recommends ./wkhtmltox.deb \
     && npm install -g rtlcss \
-    && curl -o odoo.deb -sSL https://nightly.odoo.com/master/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
+    && curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
     && apt-get install -y --no-install-recommends ./odoo.deb \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && rm -f /etc/apt/sources.list.d/pgdg.list ./wkhtmltox.deb ./odoo.deb
