@@ -19,6 +19,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql-client wget \
     && wget -O wkhtmltox.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_arm64.deb \
     && apt-get install -y --no-install-recommends ./wkhtmltox.deb \
+    && npm install -g n \
+    && n 20 \
     && npm install -g rtlcss \
     && npm install -g @google/gemini-cli \
     && curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
