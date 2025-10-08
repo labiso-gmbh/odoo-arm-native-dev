@@ -5,8 +5,7 @@
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;
-esac
+      *) return;;esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -37,8 +36,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
+    xterm-color|*-256color) color_prompt=yes;;esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
@@ -94,7 +92,7 @@ alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\\s*\\\\d\\+\\s*//;s/[;&|]\\s*alert$//'\'')"'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -118,3 +116,5 @@ fi
 
 PATH=$PATH:/home/odoo/.local/bin
 export PATH
+export EDITOR=nano
+export GEMINI_API_KEY="YOUR_API_KEY"

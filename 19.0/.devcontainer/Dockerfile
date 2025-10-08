@@ -41,7 +41,8 @@ FROM base-odoo-19
 
 # Install development dependencies
 # Install ARM64 development dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends nano \
+    && apt-get install -y --no-install-recommends \
     build-essential \
     cups \
     default-jdk \
