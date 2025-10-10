@@ -56,7 +56,7 @@ RUN curl -s https://upgrade.odoo.com/upgrade -o /usr/local/bin/odoo-upgrade \
 
 # Copy project files and scripts
 COPY requirements.txt /odoo_files/
-COPY bashrc /odoo_files/.bashrc
+COPY bashrc /home/odoo/.bashrc
 COPY odoo-dev-bin /usr/bin/
 COPY entrypoint.sh /
 COPY wait-for-psql.py /usr/local/bin/
