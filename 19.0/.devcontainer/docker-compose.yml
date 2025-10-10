@@ -26,6 +26,7 @@ services:
     volumes:
       - odoo19_data:/home/odoo
       - ../workspace:/workspace
+      - ${HOME}/.gemini:/home/odoo/.gemini
     environment:
       - PGPASSWORD=odoo
       - PGUSER=odoo
