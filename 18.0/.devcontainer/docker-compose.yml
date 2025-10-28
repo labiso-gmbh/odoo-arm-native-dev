@@ -24,7 +24,7 @@ services:
       - ../workspace:/workspace
       - ${HOME}/.gemini:/home/odoo/.gemini
     env_file:
-      - ../.env
+      - ../../.env
     environment:
       - PGPASSWORD=odoo
       - PGUSER=odoo
