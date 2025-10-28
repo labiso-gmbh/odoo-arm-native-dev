@@ -55,11 +55,11 @@ RUN curl -s https://upgrade.odoo.com/upgrade -o /usr/local/bin/odoo-upgrade \
     && ln -s /usr/bin/python3 /usr/bin/python
 
 # Copy project files and scripts
-COPY requirements.txt /odoo_files/
-COPY bashrc /home/odoo/.bashrc
-COPY odoo-dev-bin /usr/bin/
-COPY entrypoint.sh /
-COPY wait-for-psql.py /usr/local/bin/
+COPY 16.0/.devcontainer/requirements.txt /odoo_files/
+COPY ../../common/bashrc /usr/local/etc/bashrc_template
+COPY 16.0/.devcontainer/odoo-dev-bin /usr/bin/
+COPY ../../common/entrypoint.sh /
+COPY ../../common/wait-for-psql.py /usr/local/bin/
 
 # Set permissions and user configurations
 RUN chown odoo:odoo /entrypoint.sh && chmod +x /entrypoint.sh \

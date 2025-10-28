@@ -17,8 +17,8 @@ services:
 
   odoo:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../..
+      dockerfile: 16.0/.devcontainer/Dockerfile
     volumes:
       - odoo16_data:/home/odoo
       - ../workspace:/workspace

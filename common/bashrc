@@ -5,7 +5,8 @@
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;esac
+      *) return;;
+esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -36,7 +37,8 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;esac
+    xterm-color|*-256color) color_prompt=yes;;
+esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
@@ -64,7 +66,7 @@ unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
+xterm*|rxvt*) 
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
     ;;
 *)
@@ -118,10 +120,9 @@ fi
 PATH=$PATH:/home/odoo/.local/bin
 export PATH
 export EDITOR=nano
-export GEMINI_API_KEY="YOUR_API_KEY"
 
 # --- Start Gemini CLI Interactive Model Selector (Added by Gemini CLI) ---
-# Starts the Gemini CLI, prompting for 'flash' (gemini-flash-latest) or 'pro' (gemini-pro-latest) model.
+# Starts the Gemini CLI, prompting for 'flash' (gemini-2.5-flash) or 'pro' (gemini-2.5-pro) model.
 gem() {
   local model_choice
   # Use 'read -n 1' for Bash compatibility (instead of 'read -k1' for Zsh)
@@ -130,14 +131,14 @@ gem() {
 
   case $model_choice in
     [fF])
-      model="gemini-flash-latest"
+      model="gemini-2.5-flash"
       ;;
     [pP])
-      model="gemini-pro-latest"
+      model="gemini-2.5-pro"
       ;;
     *)
       echo "Invalid choice. Using flash model."
-      model="gemini-flash-latest"
+      model="gemini-2.5-flash"
       ;;
   esac
 
