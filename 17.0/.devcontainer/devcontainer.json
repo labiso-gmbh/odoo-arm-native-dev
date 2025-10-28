@@ -12,7 +12,6 @@
   "extensions": [
     "aaron-bond.better-comments",
     "ecmel.vscode-html-css",
-    "github.copilot-nightly",
     "gruntfuggly.todo-tree",
     "hediet.vscode-drawio",
     "jigar-patel.odoosnippets",
