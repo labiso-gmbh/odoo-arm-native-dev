@@ -109,57 +109,66 @@ workspace/
   - PostgreSQL utilities
   - Development dependencies
 
-## 🛠 Development Tools
+## ☁️ Gemini CLI Authentication
 
-- **Python Environment**
-  - Black formatter
-  - Pylance
-  - Debugging configurations
-
-- **VSCode Integration**
-  - Odoo snippets
-  - Git support
-  - XML/Python support
-  - Thunder Client
-
-- **Container Tools**
-  - ARM64 wkhtmltopdf
-  - PostgreSQL utilities
-  - Development dependencies
-
-## ☁️ Google Cloud (Vertex AI) Integration
-
-This development environment is configured to integrate with Google Cloud's Vertex AI, allowing you to use Gemini models via the Gemini CLI within your Odoo containers. This requires setting up your Google Cloud Project ID and authenticating with `gcloud`.
+This development environment supports flexible authentication for the Gemini CLI, allowing you to use either a Google API Key for direct access or integrate with Google Cloud's Vertex AI.
 
 ### Environment Variables (.env file)
 
-To manage your Google Cloud Project ID, a `.env` file is used. This file is ignored by Git (`.gitignore`) to prevent sensitive information from being committed.
+To manage your authentication credentials and Google Cloud project details, a `.env` file is used. This file is ignored by Git (`.gitignore`) to prevent sensitive information from being committed.
 
 1.  **Create your `.env` file**: Copy the provided `.env.example` file to `.env` in the root of this project:
     ```bash
     cp .env.example .env
     ```
 
-2.  **Configure `GCP_PROJECT_ID`**: Open the newly created `.env` file and set your Google Cloud Project ID:
+2.  **Configure your `.env` file**: Open the newly created `.env` file and fill in the relevant details:
     ```ini
     # .env
+    # Your Google Cloud Project ID for Vertex AI access (optional, if using Vertex AI)
     GCP_PROJECT_ID="your-google-cloud-project-id"
+
+    # Your Google Cloud location/region for Vertex AI (e.g., us-central1) (optional, if using Vertex AI)
+    GOOGLE_CLOUD_LOCATION="your-google-cloud-location"
+
+    # Your Google API Key for direct Gemini API access (optional, if not using Vertex AI)
+    GOOGLE_API_KEY="your-google-api-key"
     ```
-    Replace `"your-google-cloud-project-id"` with the actual ID of your Google Cloud project.
+    *   **`GCP_PROJECT_ID`** and **`GOOGLE_CLOUD_LOCATION`** are needed if you plan to use Vertex AI.
+    *   **`GOOGLE_API_KEY`** is needed if you plan to use direct Gemini API access. You should typically use one method or the other.
 
-### `gcloud` Authentication
+### Authentication Methods
 
-To allow the Gemini CLI to access Vertex AI, you need to authenticate with Google Cloud. This can be done once on your host machine, and the credentials will be persisted and available inside your dev containers.
+You can choose between two primary methods for Gemini CLI authentication:
 
-1.  **Install Google Cloud CLI (if not already installed)**: Follow the official Google Cloud documentation to install `gcloud` CLI on your host machine.
+#### 1. Using a Google API Key (Direct Gemini API Access)
 
-2.  **Authenticate**: Open a terminal on your host machine and run the following command:
+This method is simpler if you only need direct access to the Gemini API without the full Vertex AI platform features.
+
+1.  **Obtain an API Key**: Generate a Google API Key from the Google Cloud Console. Ensure it has the necessary permissions to access the Gemini API.
+2.  **Set `GOOGLE_API_KEY`**: Add your API key to the `GOOGLE_API_KEY` variable in your `.env` file.
+3.  **Usage**: Gemini CLI will automatically pick up this API key.
+
+#### 2. Using Vertex AI (Recommended for Production/Advanced Features)
+
+This method leverages Google Cloud's Vertex AI platform, offering enhanced security, management, and features.
+
+1.  **Configure `.env`**: Ensure `GCP_PROJECT_ID` and `GOOGLE_CLOUD_LOCATION` are set in your `.env` file.
+2.  **Authenticate `gcloud` on Host**: To allow the Gemini CLI to access Vertex AI, you need to authenticate with Google Cloud on your host machine. This can be done once, and the credentials will be persisted and available inside your dev containers.
+    *   **Install Google Cloud CLI (if not already installed)**: Follow the official Google Cloud documentation to install `gcloud` CLI on your host machine.
+    *   **Authenticate**: Open a terminal on your host machine and run the following command:
+        ```bash
+        gcloud auth application-default login
+        ```
+        This command will open a browser window for you to log in with your Google account. Once authenticated, the credentials will be stored in `~/.config/gcloud` on your host machine. This directory is mounted into your dev containers, making the authentication available within the container.
+3.  **Configure Gemini CLI (Inside Container)**: After authenticating `gcloud` on your host and rebuilding your container, open a terminal *inside your dev container* and start Gemini CLI. Then, use the `/auth` command:
     ```bash
-    gcloud auth application-default login
+    gemini
+    /auth
     ```
-    This command will open a browser window for you to log in with your Google account. Once authenticated, the credentials will be stored in `~/.config/gcloud` on your host machine. This directory is mounted into your dev containers, making the authentication available within the container.
+    Follow the prompts to select **Google Vertex AI**. Gemini CLI should automatically pick up the `GCP_PROJECT_ID` and `GOOGLE_CLOUD_LOCATION` from your environment variables.
 
-With these steps, the Gemini CLI inside your Odoo development containers will be able to interact with Vertex AI using your specified Google Cloud project.
+With these steps, the Gemini CLI inside your Odoo development containers will be able to interact with Gemini models using your chosen authentication method.
 
 ## 🔄 Development Workflow
 
