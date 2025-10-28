@@ -4,7 +4,6 @@
   "service": "odoo",
   "workspaceFolder": "/workspace",
   "remoteEnv": {
-    "GOOGLE_GENAI_USE_VERTEXAI": "true",
     "CLOUDSDK_CORE_PROJECT": "${localEnv:GCP_PROJECT_ID}"
   },
   "mounts": [
