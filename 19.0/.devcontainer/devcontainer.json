@@ -8,7 +8,7 @@
     "CLOUDSDK_CORE_PROJECT": "${localEnv:GCP_PROJECT_ID}"
   },
   "mounts": [
-    "source=${localEnv:HOME}/.config/gcloud,target=/root/.config/gcloud,type=bind"
+    "source=${localEnv:HOME}/.config/gcloud,target=/home/odoo/.config/gcloud,type=bind"
   ],
   "customizations": {
     "vscode": {
