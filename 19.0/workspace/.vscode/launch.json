@@ -17,7 +17,7 @@
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
                 "--dev=qweb,xml",
                 "--load=base,web",
-                // "--init=/",
+                "--init=labidoo_client",
                 // "--test-enable",
                 // "--test-tags=/",
                 // "--stop-after-init",

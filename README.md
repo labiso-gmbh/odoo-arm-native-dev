@@ -109,6 +109,58 @@ workspace/
   - PostgreSQL utilities
   - Development dependencies
 
+## 🛠 Development Tools
+
+- **Python Environment**
+  - Black formatter
+  - Pylance
+  - Debugging configurations
+
+- **VSCode Integration**
+  - Odoo snippets
+  - Git support
+  - XML/Python support
+  - Thunder Client
+
+- **Container Tools**
+  - ARM64 wkhtmltopdf
+  - PostgreSQL utilities
+  - Development dependencies
+
+## ☁️ Google Cloud (Vertex AI) Integration
+
+This development environment is configured to integrate with Google Cloud's Vertex AI, allowing you to use Gemini models via the Gemini CLI within your Odoo containers. This requires setting up your Google Cloud Project ID and authenticating with `gcloud`.
+
+### Environment Variables (.env file)
+
+To manage your Google Cloud Project ID, a `.env` file is used. This file is ignored by Git (`.gitignore`) to prevent sensitive information from being committed.
+
+1.  **Create your `.env` file**: Copy the provided `.env.example` file to `.env` in the root of this project:
+    ```bash
+    cp .env.example .env
+    ```
+
+2.  **Configure `GCP_PROJECT_ID`**: Open the newly created `.env` file and set your Google Cloud Project ID:
+    ```ini
+    # .env
+    GCP_PROJECT_ID="your-google-cloud-project-id"
+    ```
+    Replace `"your-google-cloud-project-id"` with the actual ID of your Google Cloud project.
+
+### `gcloud` Authentication
+
+To allow the Gemini CLI to access Vertex AI, you need to authenticate with Google Cloud. This can be done once on your host machine, and the credentials will be persisted and available inside your dev containers.
+
+1.  **Install Google Cloud CLI (if not already installed)**: Follow the official Google Cloud documentation to install `gcloud` CLI on your host machine.
+
+2.  **Authenticate**: Open a terminal on your host machine and run the following command:
+    ```bash
+    gcloud auth application-default login
+    ```
+    This command will open a browser window for you to log in with your Google account. Once authenticated, the credentials will be stored in `~/.config/gcloud` on your host machine. This directory is mounted into your dev containers, making the authentication available within the container.
+
+With these steps, the Gemini CLI inside your Odoo development containers will be able to interact with Vertex AI using your specified Google Cloud project.
+
 ## 🔄 Development Workflow
 
 1. **Module Development**

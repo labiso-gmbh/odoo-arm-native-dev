@@ -3,6 +3,13 @@
   "name": "Odoo 19.0 Development Container",
   "service": "odoo",
   "workspaceFolder": "/workspace",
+  "remoteEnv": {
+    "GOOGLE_GENAI_USE_VERTEXAI": "true",
+    "CLOUDSDK_CORE_PROJECT": "${localEnv:GCP_PROJECT_ID}"
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.config/gcloud,target=/root/.config/gcloud,type=bind"
+  ],
   "customizations": {
     "vscode": {
       "extensions": [

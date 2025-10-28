@@ -27,7 +27,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
     && apt-get install -y --no-install-recommends ./odoo.deb \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && rm -f /etc/apt/sources.list.d/pgdg.list ./wkhtmltox.deb ./libssl1.1.deb ./odoo.deb
+    && rm -f /etc/apt/sources.list.d/pgdg.list ./wkhtmltox.deb ./libssl1.1.deb ./odoo.deb \
+    && echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
+    && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - \
+    && apt-get update && apt-get install -y google-cloud-cli
 
 # Create directories and set permissions
 RUN mkdir -p /mnt/extra-addons \

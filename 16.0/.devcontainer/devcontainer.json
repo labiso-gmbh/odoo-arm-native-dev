@@ -1,5 +1,15 @@
 {
   "dockerComposeFile": "docker-compose.yml",
+  "name": "Odoo 16.0 Development Container",
+  "service": "odoo",
+  "workspaceFolder": "/workspace",
+  "remoteEnv": {
+    "GOOGLE_GENAI_USE_VERTEXAI": "true",
+    "CLOUDSDK_CORE_PROJECT": "${localEnv:GCP_PROJECT_ID}"
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.config/gcloud,target=/root/.config/gcloud,type=bind"
+  ],
   "extensions": [
     "aaron-bond.better-comments",
     "ecmel.vscode-html-css",
@@ -17,8 +27,6 @@
     "visualstudioexptteam.vscodeintellicode",
     "yzhang.markdown-all-in-one"
   ],
-  "name": "Odoo 16.0 Development Container",
-  "service": "odoo",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash",
     "python.formatting.provider": "black",
@@ -27,6 +35,5 @@
       "--line-length=79",
       "--experimental-string-processing"
     ]
-  },
-  "workspaceFolder": "/workspace"
+  }
 }

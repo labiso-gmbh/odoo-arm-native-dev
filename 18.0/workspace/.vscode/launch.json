@@ -10,21 +10,21 @@
             "justMyCode": false,
             "args": [
                 // "shell",
-                "--exclude-addon-dirs=*template*",
+                "--exclude-addon-dirs=*template*,kronberg",
                 "--database=dev_ee",
-                "--log-level=test",
+                "--log-level=info",
                 "--log-handler=odoo.tools.convert:DEBUG",
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
                 "--dev=qweb,xml",
-                "--load=base,web",
-                // "--init=/",
+                // "--load=base,web",
+                "--init=norva24_germany_auto_partner_number",
                 // "--test-enable",
-                // "--test-tags=/",
+                // "--test-tags=labidoo_project_access_rights",
                 // "--stop-after-init",
                 "--load-language=de_DE",
                 "--language=de_DE",
                 // "--i18n-export=${workspaceFolder}/de.po",
-                // "--modules=/"
+                // "--modules=labidoo_dms_sales_project"
             ]
         },
         {
@@ -36,21 +36,21 @@
             "justMyCode": false,
             "args": [
                 // "shell",
-                "--exclude-addon-dirs=*enterprise*,*template*",
+                "--exclude-addon-dirs=*enterprise*,*template*,",
                 "--database=dev_ce",
                 "--log-level=test",
                 "--log-handler=odoo.tools.convert:DEBUG",
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
                 "--dev=qweb,xml",
                 "--load=base,web",
-                // "--init=/",
+                "--init=web_editor_media_dialog_dms",
                 // "--test-enable",
                 // "--test-tags=/",
                 // "--stop-after-init",
                 "--load-language=de_DE",
                 "--language=de_DE",
                 // "--i18n-export=${workspaceFolder}/de.po",
-                // "--modules=/"
+                // "--modules=kachur_sale"
             ]
         },
     {
@@ -59,7 +59,10 @@
         "request": "launch",
         "program": "${file}",
         "console": "integratedTerminal",
-        "justMyCode": true
+        "justMyCode": false,
+        "args": [
+            "--customer=Norva24"
+        ]
     }
     ],
 }

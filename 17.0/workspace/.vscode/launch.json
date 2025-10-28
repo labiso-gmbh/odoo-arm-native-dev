@@ -17,14 +17,14 @@
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
                 "--dev=qweb,xml",
                 "--load=base,web",
-                // "--init=/",
+                "--init=crm",
                 // "--test-enable",
                 // "--test-tags=/",
-                // "--stop-after-init",
+                "--stop-after-init",
                 "--load-language=de_DE",
                 "--language=de_DE",
                 // "--i18n-export=${workspaceFolder}/de.po",
-                // "--modules=/"
+                // "--modules=labidoo_project"
             ]
         },
         {

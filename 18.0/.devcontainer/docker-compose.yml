@@ -23,6 +23,8 @@ services:
       - odoo18_data:/home/odoo
       - ../workspace:/workspace
       - ${HOME}/.gemini:/home/odoo/.gemini
+    env_file:
+      - ../.env
     environment:
       - PGPASSWORD=odoo
       - PGUSER=odoo
