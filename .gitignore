@@ -17,7 +17,6 @@ sdist/
 var/
 wheels/
 *.egg-info/
-.installed.cfg
 *.egg
 
 # Virtual Environment
@@ -36,6 +35,9 @@ env/
 !*/workspace/README.md
 !*/workspace/.vscode/
 !*/workspace/odoo
+
+# Ignore VS Code launch configurations
+**/workspace/.vscode/launch.json
 
 # macOS
 .DS_Store
