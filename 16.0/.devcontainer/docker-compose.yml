@@ -23,6 +23,12 @@ services:
       - odoo16_data:/home/odoo
       - ../workspace:/workspace
       - ${HOME}/.gemini:/home/odoo/.gemini
+      # Mounts the service account file from the host (path from .env)
+      # to a fixed location in the container.
+      - type: bind
+        source: ${GCP_SERVICE_ACCOUNT_KEY_FILE}
+        target: /home/odoo/.gcp/service-account.json
+        read_only: true
     env_file:
       - ../../.env
     environment:
@@ -32,6 +38,8 @@ services:
       # Mail settings for Mailpit
       - SMTP_HOST=mailpit
       - SMTP_PORT=1025
+      # Sets the ADC environment variable to the path in the container
+      - GOOGLE_APPLICATION_CREDENTIALS=/home/odoo/.gcp/service-account.json
     depends_on:
       - postgres
     ports:
