@@ -10,21 +10,21 @@
             "justMyCode": false,
             "args": [
                 // "shell",
-                "--exclude-addon-dirs=*template*,kronberg",
+                "--exclude-addon-dirs=*template*",
                 "--database=dev_ee",
-                "--log-level=info",
+                "--log-level=test",
                 "--log-handler=odoo.tools.convert:DEBUG",
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
                 "--dev=qweb,xml",
-                // "--load=base,web",
-                "--init=norva24_germany_auto_partner_number",
+                "--load=base,web",
+                // "--init=/",
                 // "--test-enable",
-                // "--test-tags=labidoo_project_access_rights",
+                // "--test-tags=/",
                 // "--stop-after-init",
                 "--load-language=de_DE",
-                "--language=de_DE",
+                // "--language=de_DE",
                 // "--i18n-export=${workspaceFolder}/de.po",
-                // "--modules=labidoo_dms_sales_project"
+                // "--modules=/"
             ]
         },
         {
@@ -36,21 +36,21 @@
             "justMyCode": false,
             "args": [
                 // "shell",
-                "--exclude-addon-dirs=*enterprise*,*template*,",
+                "--exclude-addon-dirs=*enterprise*,*template*",
                 "--database=dev_ce",
                 "--log-level=test",
                 "--log-handler=odoo.tools.convert:DEBUG",
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
                 "--dev=qweb,xml",
                 "--load=base,web",
-                "--init=web_editor_media_dialog_dms",
+                // "--init=/",
                 // "--test-enable",
                 // "--test-tags=/",
                 // "--stop-after-init",
                 "--load-language=de_DE",
-                "--language=de_DE",
+                // "--language=de_DE",
                 // "--i18n-export=${workspaceFolder}/de.po",
-                // "--modules=kachur_sale"
+                // "--modules=/"
             ]
         },
     {
@@ -59,10 +59,7 @@
         "request": "launch",
         "program": "${file}",
         "console": "integratedTerminal",
-        "justMyCode": false,
-        "args": [
-            "--customer=Norva24"
-        ]
+        "justMyCode": true
     }
-    ],
+    ]
 }

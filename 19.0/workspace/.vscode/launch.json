@@ -17,7 +17,7 @@
                 "--config=${workspaceFolder}/.vscode/odoo.conf",
                 "--dev=qweb,xml",
                 "--load=base,web",
-                "--init=labidoo_client",
+                // "--init=/",
                 // "--test-enable",
                 // "--test-tags=/",
                 // "--stop-after-init",
@@ -61,5 +61,5 @@
         "console": "integratedTerminal",
         "justMyCode": true
     }
-    ],
+    ]
 }
