@@ -23,12 +23,6 @@ services:
       - odoo16_data:/home/odoo
       - ../workspace:/workspace
       - ${HOME}/.gemini:/home/odoo/.gemini
-      # Mounts the service account file from the host (path from .env)
-      # to a fixed location in the container.
-      - type: bind
-        source: ${GCP_SERVICE_ACCOUNT_KEY_FILE}
-        target: /home/odoo/.gcp/service-account.json
-        read_only: true
     env_file:
       - ../../.env
     environment:

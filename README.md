@@ -125,19 +125,13 @@ To manage your authentication credentials and Google Cloud project details, a `.
 2.  **Configure your `.env` file**: Open the newly created `.env` file and fill in the relevant details:
     ```ini
     # .env
-    # Your Google Cloud Project ID for Vertex AI access
-    GCP_PROJECT_ID="your-google-cloud-project-id"
-
     # Your Google Cloud location/region for Vertex AI (e.g., us-central1)
     GOOGLE_CLOUD_LOCATION="your-google-cloud-location"
-
-    # Path to your Google Cloud Service Account JSON key file on the host machine
-    GCP_SERVICE_ACCOUNT_KEY_FILE="/path/to/your/service-account-file.json"
 
     # Your Google API Key for direct Gemini API access (optional)
     GOOGLE_API_KEY="your-google-api-key"
     ```
-    *   **`GCP_PROJECT_ID`**, **`GOOGLE_CLOUD_LOCATION`**, and **`GCP_SERVICE_ACCOUNT_KEY_FILE`** are needed if you plan to use Vertex AI.
+    *   **`GOOGLE_CLOUD_LOCATION`** is needed if you plan to use Vertex AI.
     *   **`GOOGLE_API_KEY`** is an alternative if you prefer direct Gemini API access.
 
 ### Authentication Methods
@@ -154,15 +148,19 @@ This method uses a Google Cloud Service Account JSON key file for robust and per
     *   Grant it the necessary roles (e.g., "Vertex AI User").
     *   Create a new JSON key and download it to a secure location on your host machine.
 
-2.  **Configure `.env`**:
-    *   Set `GCP_PROJECT_ID` and `GOOGLE_CLOUD_LOCATION` in your `.env` file.
-    *   Set `GCP_SERVICE_ACCOUNT_KEY_FILE` to the absolute path of the downloaded JSON key file on your host machine.
+2.  **Place the Service Account Key in the Container**:
+    *   Inside the dev container, create the directory structure `/home/odoo/.gcp/`.
+    *   Place your downloaded `service-account.json` file into this directory: `/home/odoo/.gcp/service-account.json`. The filename must be `service-account.json`.
 
-3.  **Rebuild Your Container**: If the container is already running, you'll need to rebuild it for the changes to take effect. In VSCode, you can use the command "Remote-Containers: Rebuild Container".
+3.  **Configure `.env` (only if needed)**:
+    *   Set `GOOGLE_CLOUD_LOCATION` in your `.env` file.
 
-4.  **Configure Gemini CLI (Inside Container)**:
-    *   Open a terminal *inside your dev container* and start Gemini CLI: `gemini`
-    *   Use the `/auth` command and select **Google Vertex AI**. Gemini CLI will automatically use the service account credentials mounted into the container.
+4.  **Rebuild Your Container (if the directory and file were not present prior to first build)**: If the container is already running and you just created the directory/placed the file, you might need to rebuild it for the changes to take effect. In VSCode, you can use the command "Remote-Containers: Rebuild Container".
+
+5.  **Gemini CLI Configuration (Inside Container)**:
+    *   The `GOOGLE_APPLICATION_CREDENTIALS` environment variable is automatically set to `/home/odoo/.gcp/service-account.json` within the container.
+    *   Open a terminal *inside your dev container* and start Gemini CLI: `gemini`.
+    *   Use the `/auth` command and select **Google Vertex AI**. Gemini CLI will automatically use the service account credentials at the specified path.
 
 #### 2. Using a Google API Key (Direct Gemini API Access)
 
@@ -171,15 +169,6 @@ This method is simpler if you only need direct access to the Gemini API without 
 1.  **Obtain an API Key**: Generate a Google API Key from the Google Cloud Console.
 2.  **Set `GOOGLE_API_KEY`**: Add your API key to the `GOOGLE_API_KEY` variable in your `.env` file.
 3.  **Usage**: Gemini CLI will automatically pick up this API key.
-
-#### 3. Using `gcloud auth application-default login` (Legacy Method)
-
-This method is now considered **outdated** but remains available for users who prefer not to use service accounts. It relies on credentials generated on the host machine.
-
-1.  **Authenticate `gcloud` on Host**:
-    *   Install the Google Cloud CLI (`gcloud`) on your host machine.
-    *   Run `gcloud auth application-default login`. This stores credentials in `~/.config/gcloud`.
-2.  **Limitation**: This method can lead to sessions that expire, requiring you to re-authenticate periodically. The service account method is more stable for long-term development.
 
 ## 🔄 Development Workflow
 

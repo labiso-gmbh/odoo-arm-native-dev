@@ -3,8 +3,8 @@
   "name": "Odoo 17.0 Development Container",
   "service": "odoo",
   "workspaceFolder": "/workspace",
-  "remoteEnv": {
-    "CLOUDSDK_CORE_PROJECT": "${localEnv:GCP_PROJECT_ID}"
+  "containerEnv": {
+    "GOOGLE_APPLICATION_CREDENTIALS": "/home/odoo/.gcp/service-account.json"
   },
 
   "extensions": [

@@ -65,7 +65,7 @@ COPY ../../common/wait-for-psql.py /usr/local/bin/
 RUN chown odoo:odoo /entrypoint.sh && chmod +x /entrypoint.sh \
     && chmod 755 /usr/bin/* \
     && chown -R odoo:odoo /odoo_files \
-    && mkdir -p /home/odoo && chown odoo:odoo /home/odoo \
+    && mkdir -p /home/odoo/.gcp && chown odoo:odoo /home/odoo/.gcp \
     && usermod -d /home/odoo odoo
 
 # Install Python dependencies

@@ -27,14 +27,6 @@ services:
       - odoo19_data:/home/odoo
       - ../workspace:/workspace
       - ${HOME}/.gemini:/home/odoo/.gemini
-      # --- START ÄNDERUNG ---
-      # Mountet die Service-Account-Datei vom Host (Pfad aus .env)
-      # an einen festen Ort im Container.
-      - type: bind
-        source: ${GCP_SERVICE_ACCOUNT_KEY_FILE}
-        target: /home/odoo/.gcp/service-account.json
-        read_only: true
-      # --- ENDE ÄNDERUNG ---
     env_file:
       - ../../.env
     environment:
@@ -44,10 +36,7 @@ services:
       # Mail settings for Mailpit
       - SMTP_HOST=mailpit
       - SMTP_PORT=1025
-      # --- START ÄNDERUNG ---
-      # Setzt die ADC-Umgebungsvariable auf den Pfad im Container
       - GOOGLE_APPLICATION_CREDENTIALS=/home/odoo/.gcp/service-account.json
-      # --- ENDE ÄNDERUNG ---
     depends_on:
       - postgres
     ports:
