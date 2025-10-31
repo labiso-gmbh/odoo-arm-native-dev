@@ -53,6 +53,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends nano \
     python3-dev \
     python3-venv \
     software-properties-common \
+    ripgrep \
     wget \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

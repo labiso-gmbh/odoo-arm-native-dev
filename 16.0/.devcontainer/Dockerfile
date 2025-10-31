@@ -45,7 +45,7 @@ RUN echo 'Acquire::https::apt.postgresql.org::Verify-Peer "false";' > /etc/apt/a
     && dpkg --add-architecture amd64 \
     && apt-get update && apt-get install -y --no-install-recommends nano \
     && apt-get install -y --no-install-recommends \
-    cups default-jdk gcc git libcups2-dev libwebp-dev python3-dev \
+    cups default-jdk gcc git libcups2-dev libwebp-dev python3-dev ripgrep \
     libc6:amd64 libstdc++6:amd64 libgcc1:amd64 libz1:amd64 \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
