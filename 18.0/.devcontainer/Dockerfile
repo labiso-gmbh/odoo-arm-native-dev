@@ -33,7 +33,7 @@ RUN mkdir -p /mnt/extra-addons \
     && chown -R odoo:odoo /mnt/extra-addons
 
 # Define volumes and expose ports
-VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
+VOLUME ["/var/lib/odoo", "/mnt/extra-addons", "/usr/local/"]
 EXPOSE 8069 8071 8072
 
 # Stage 2: Development Environment
