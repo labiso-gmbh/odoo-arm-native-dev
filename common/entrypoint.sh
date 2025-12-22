@@ -8,4 +8,8 @@ fi
 
 find /workspace -name "requirements.txt" -exec pip3 install --break-system-packages -r {} \;
 
+# Update Gemini CLI to the latest version on every start
+echo "Checking for Gemini CLI updates..."
+npm install -g @google/gemini-cli@latest
+
 sleep infinity

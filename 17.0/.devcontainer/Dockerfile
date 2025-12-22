@@ -23,7 +23,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && npm install -g n \
     && n 20 \
     && npm install -g rtlcss \
-    && npm install -g @google/gemini-cli \
     && curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
     && apt-get install -y --no-install-recommends ./odoo.deb \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -73,7 +72,17 @@ RUN chown odoo:odoo /entrypoint.sh && chmod +x /entrypoint.sh \
 # Install Python dependencies
 RUN pip install --break-system-packages --no-cache-dir -r /odoo_files/requirements.txt
 
-# Set user, entrypoint, and default shell
+# Setup user-writable npm global dir for gemini-cli
+RUN mkdir -p /opt/npm-global \
+    && chown -R odoo:odoo /opt/npm-global
+
+ENV NPM_CONFIG_PREFIX=/opt/npm-global
+ENV PATH=$PATH:/opt/npm-global/bin
+
+# Switch to odoo user and install gemini-cli
 USER odoo
+RUN npm install -g @google/gemini-cli
+
+# Set user, entrypoint, and default shell
 ENV SHELL=/bin/bash
 ENTRYPOINT ["/entrypoint.sh"]
