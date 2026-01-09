@@ -4,6 +4,7 @@
         {
             "name": "Odoo EE",
             "type": "debugpy",
+            "python": "/usr/bin/python3",
             "request": "launch",
             "program": "/usr/bin/odoo-dev-bin",
             "console": "integratedTerminal",
@@ -30,6 +31,7 @@
         {
             "name": "Odoo CE",
             "type": "debugpy",
+            "python": "/usr/bin/python3",
             "request": "launch",
             "program": "/usr/bin/odoo-dev-bin",
             "console": "integratedTerminal",
@@ -53,13 +55,14 @@
                 // "--modules=/"
             ]
         },
-    {
-        "name": "Python: Current File",
-        "type": "debugpy",
-        "request": "launch",
-        "program": "${file}",
-        "console": "integratedTerminal",
-        "justMyCode": true
-    }
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "python": "/usr/bin/python3",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
     ]
 }

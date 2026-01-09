@@ -4,6 +4,7 @@
         {
             "name": "Odoo EE",
             "type": "debugpy",
+            "python": "/usr/bin/python3",
             "request": "launch",
             "program": "/usr/bin/odoo-dev-bin",
             "console": "integratedTerminal",
@@ -30,6 +31,7 @@
         {
             "name": "Odoo CE",
             "type": "debugpy",
+            "python": "/usr/bin/python3",
             "request": "launch",
             "program": "/usr/bin/odoo-dev-bin",
             "console": "integratedTerminal",
@@ -56,6 +58,7 @@
     {
         "name": "Python: Current File",
         "type": "debugpy",
+        "python": "/usr/bin/python3",
         "request": "launch",
         "program": "${file}",
         "console": "integratedTerminal",
