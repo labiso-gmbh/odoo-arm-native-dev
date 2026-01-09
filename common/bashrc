@@ -118,6 +118,12 @@ if ! shopt -oq posix; then
 fi
 
 PATH=$PATH:/home/odoo/.local/bin
+
+# Add Homebrew to PATH if installed (19.0+)
+if [ -d "/home/linuxbrew/.linuxbrew" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
 export PATH
 export EDITOR=nano
 

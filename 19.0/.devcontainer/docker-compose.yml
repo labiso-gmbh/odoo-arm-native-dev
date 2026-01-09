@@ -25,6 +25,7 @@ services:
       dockerfile: 19.0/.devcontainer/Dockerfile
     volumes:
       - odoo19_data:/home/odoo
+      - odoo19_linuxbrew:/home/linuxbrew/.linuxbrew
       - ../workspace:/workspace
       - ${HOME}/.gemini:/home/odoo/.gemini
     env_file:
@@ -63,3 +64,4 @@ networks:
 volumes:
   odoo19_database:
   odoo19_data:
+  odoo19_linuxbrew:

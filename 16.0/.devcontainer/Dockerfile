@@ -59,6 +59,9 @@ COPY ../../common/bashrc /usr/local/etc/bashrc_template
 COPY 16.0/.devcontainer/odoo-dev-bin /usr/bin/
 COPY ../../common/entrypoint.sh /
 COPY ../../common/wait-for-psql.py /usr/local/bin/
+COPY ../../common/AGENTS.md /odoo_files/
+COPY ../../common/CLAUDE.md /odoo_files/
+COPY ../../common/GEMINI.md /odoo_files/
 
 # Set permissions and user configurations
 RUN chown odoo:odoo /entrypoint.sh && chmod +x /entrypoint.sh \
@@ -71,16 +74,21 @@ RUN chown odoo:odoo /entrypoint.sh && chmod +x /entrypoint.sh \
 # Install Python dependencies
 RUN pip install --break-system-packages --no-cache-dir -r /odoo_files/requirements.txt
 
-# Setup user-writable npm global dir for gemini-cli
-RUN mkdir -p /opt/npm-global \
-    && chown -R odoo:odoo /opt/npm-global
+# Create Homebrew directory with proper permissions for odoo user
+RUN mkdir -p /home/linuxbrew/.linuxbrew \
+    && chown -R odoo:odoo /home/linuxbrew
 
-ENV NPM_CONFIG_PREFIX=/opt/npm-global
-ENV PATH=$PATH:/opt/npm-global/bin
-
-# Switch to odoo user and install gemini-cli
+# Switch to odoo user for Homebrew installation
 USER odoo
-RUN npm install -g @google/gemini-cli
+
+# Install Homebrew (Linuxbrew) as non-root user
+RUN NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Add Homebrew to PATH
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"
+
+# Install Claude Code CLI and Gemini CLI via Homebrew
+RUN brew install claude-code gemini-cli
 
 # Set user, entrypoint, and default shell
 ENV SHELL=/bin/bash
