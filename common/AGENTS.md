@@ -224,6 +224,12 @@ When adding dependencies:
 
 ### Working with Translations
 
+**IMPORTANT: All development MUST be done in English.**
+- All code, comments, strings, labels, and help texts must be in English
+- All model fields, views, menu items, and error messages must be in English
+- Translations to German or other languages must be provided via `.po` files in the `i18n/` directory
+- Never hardcode German or other non-English strings directly in code or XML files
+
 German (`de_DE`) is a primary language for this environment:
 ```bash
 # Load German language data
@@ -281,12 +287,12 @@ Odoo 19.0 includes native AI features:
 
 ## Important Notes
 
-1. **Proprietary Modules**: Both `enterprise/` and `labidoo/` contain proprietary code. Do not redistribute.
-2. **Python Version**: Uses Python 3.14+ from Homebrew (`/home/linuxbrew/.linuxbrew/opt/python@3.14`)
-3. **Time Zone**: Development script sets `TZ=UTC` automatically
-4. **Workers**: Configuration uses `workers=0` for development (single-threaded for easier debugging)
-5. **Email**: Uses Mailpit for local email testing (no external SMTP needed)
-6. **Module Naming**: Follow convention `labidoo_<functional_area>` for consistency
+1. **English-Only Development**: ALL code, strings, labels, help texts, and documentation MUST be written in English. Translations must be provided via `.po` files in the `i18n/` directory. Never hardcode non-English strings.
+2. **Proprietary Modules**: Both `enterprise/` and `labidoo/` contain proprietary code. Do not redistribute.
+4. **Time Zone**: Development script sets `TZ=UTC` automatically
+5. **Workers**: Configuration uses `workers=0` for development (single-threaded for easier debugging)
+6. **Email**: Uses Mailpit for local email testing (no external SMTP needed)
+7. **Module Naming**: Follow convention `labidoo_<functional_area>` for consistency
 
 ## Useful Odoo CLI Commands
 
