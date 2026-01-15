@@ -127,28 +127,6 @@ fi
 export PATH
 export EDITOR=nano
 
-# --- Start Gemini CLI Interactive Model Selector (Added by Gemini CLI) ---
-# Starts the Gemini CLI, prompting for 'flash' (gemini-2.5-flash) or 'pro' (gemini-2.5-pro) model.
-gem() {
-  local model_choice
-  # Use 'read -n 1' for Bash compatibility (instead of 'read -k1' for Zsh)
-  read -n 1 -p "Choose model (f for flash, p for pro): " model_choice
-  echo # Newline after read
-
-  case $model_choice in
-    [fF])
-      model="gemini-2.5-flash"
-      ;;
-    [pP])
-      model="gemini-2.5-pro"
-      ;;
-    *)
-      echo "Invalid choice. Using flash model."
-      model="gemini-2.5-flash"
-      ;;
-  esac
-
-  echo "Starting Gemini CLI with model: $model"
-  gemini --model "$model" "$@"
-}
-# --- End Gemini CLI Interactive Model Selector ---
+# Claude Code
+alias cc="claude"
+alias ccy="claude --dangerously-skip-permissions"
