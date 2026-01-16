@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-# Copy bashrc template if it doesn't exist in the home directory (due to volume mount)
-if [ ! -f "/home/odoo/.bashrc" ]; then
-  cp /usr/local/etc/bashrc_template /home/odoo/.bashrc
-  chown odoo:odoo /home/odoo/.bashrc
-fi
+# Always update bashrc from template (volume persists across rebuilds)
+# User customizations should go in ~/.bash_aliases which is sourced by bashrc
+cp /usr/local/etc/bashrc_template /home/odoo/.bashrc
+chown odoo:odoo /home/odoo/.bashrc
 
 # Copy AI agent instruction files to workspace if they don't exist
 for file in AGENTS.md CLAUDE.md GEMINI.md; do
